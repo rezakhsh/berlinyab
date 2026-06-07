@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>برلین‌یاب — جستجوی خانه در برلین</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0f0f1a;
+    --card: #1a1a2e;
+    --card2: #16213e;
+    --border: rgba(100, 120, 255, 0.15);
+    --accent: #6c63ff;
+    --accent2: #a78bfa;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --input-bg: #0f0f1a;
+    --tag-bg: rgba(108, 99, 255, 0.12);
+  }
+
+  body {
+    font-family: 'Vazirmatn', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    direction: rtl;
+  }
+
+  header {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 1.2rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--accent2);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .logo span { color: var(--text); font-weight: 300; }
+
+  .tagline {
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  .hero {
+    text-align: center;
+    padding: 3rem 1rem 2rem;
+  }
+
+  .hero h1 {
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.6rem;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--accent2);
+  }
+
+  .hero p {
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.9;
+  }
+
+  .main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 1.2rem 4rem;
+  }
+
+  .form-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+    margin-bottom: 1.2rem;
+  }
+
+  @media (max-width: 560px) {
+    .form-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 1.4rem; }
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .field.full { grid-column: 1 / -1; }
+
+  label {
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  select, input[type="number"] {
+    background: var(--input-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: 'Vazirmatn', sans-serif;
+    font-size: 0.95rem;
+    padding: 0.7rem 1rem;
+    width: 100%;
+    outline: none;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  select:focus, input[type="number"]:focus {
+    border-color: var(--accent);
+  }
+
+  select option { background: #1a1a2e; }
+
+  .checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--tag-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.4rem 0.8rem;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: var(--text);
+    transition: border-color 0.2s, background 0.2s;
+    user-select: none;
+  }
+
+  .checkbox-group input[type="checkbox"] {
+    accent-color: var(--accent);
+    width: 15px;
+    height: 15px;
+  }
+
+  .checkbox-group label:has(input:checked) {
+    border-color: var(--accent);
+    background: rgba(108,99,255,0.22);
+  }
+
+  .section-title {
+    font-size: 0.8rem;
+    color: var(--accent2);
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 1.4rem 0;
+  }
+
+  .search-btn {
+    width: 100%;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 1rem;
+    font-family: 'Vazirmatn', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.1s;
+    margin-top: 0.5rem;
+  }
+
+  .search-btn:hover { opacity: 0.88; }
+  .search-btn:active { transform: scale(0.98); }
+
+  .platforms-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    justify-content: center;
+  }
+
+  .platform-badge {
+    font-size: 0.75rem;
+    color: var(--muted);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.3rem 0.7rem;
+  }
+
+  .results-info {
+    display: none;
+    background: var(--card2);
+    border: 1px solid rgba(108,99,255,0.3);
+    border-radius: 14px;
+    padding: 1.4rem 1.6rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .results-info.visible { display: block; }
+
+  .results-info h3 {
+    font-size: 1rem;
+    color: var(--accent2);
+    margin-bottom: 1rem;
+  }
+
+  .platform-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.8rem;
+  }
+
+  .platform-link {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.8rem 1rem;
+    text-decoration: none;
+    color: var(--text);
+    font-size: 0.88rem;
+    transition: border-color 0.2s, background 0.2s;
+    cursor: pointer;
+  }
+
+  .platform-link:hover {
+    border-color: var(--accent);
+    background: var(--tag-bg);
+  }
+
+  .platform-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .pl-wg { background: rgba(255, 100, 50, 0.15); }
+  .pl-kl { background: rgba(0, 180, 100, 0.15); }
+  .pl-im { background: rgba(0, 100, 255, 0.15); }
+  .pl-iw { background: rgba(255, 150, 0, 0.15); }
+  .pl-zg { background: rgba(150, 50, 255, 0.15); }
+
+  .platform-info { line-height: 1.5; }
+  .platform-name { font-weight: 600; font-size: 0.85rem; }
+  .platform-desc { font-size: 0.75rem; color: var(--muted); }
+
+  .open-all-btn {
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: var(--accent2);
+    border-radius: 10px;
+    padding: 0.8rem;
+    font-family: 'Vazirmatn', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: background 0.2s;
+  }
+
+  .open-all-btn:hover { background: var(--tag-bg); }
+
+  .tips {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.4rem 1.6rem;
+  }
+
+  .tips h3 {
+    font-size: 0.9rem;
+    color: var(--accent2);
+    margin-bottom: 1rem;
+  }
+
+  .tip-item {
+    display: flex;
+    gap: 0.8rem;
+    margin-bottom: 0.8rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.8;
+    align-items: flex-start;
+  }
+
+  .tip-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    margin-top: 0.55rem;
+    flex-shrink: 0;
+  }
+
+  footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.78rem;
+    padding: 2rem;
+    border-top: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">🏙️ برلین‌یاب <span>— جستجوی خانه</span></div>
+  <div class="tagline">ویژه ایرانیان برلین</div>
+</header>
+
+<div class="hero">
+  <h1>خانه‌ات را در <em>برلین</em> پیدا کن</h1>
+  <p>فیلترهای خودت را انتخاب کن — ما همزمان در تمام سایت‌های آلمانی جستجو می‌کنیم</p>
+</div>
+
+<div class="main">
+
+  <div class="form-card">
+
+    <div class="section-title">📍 محله و قیمت</div>
+    <div class="form-grid">
+      <div class="field">
+        <label>محله (Bezirk)</label>
+        <select id="bezirk">
+          <option value="">همه محله‌ها</option>
+          <option value="Mitte">Mitte — میته</option>
+          <option value="Prenzlauer Berg">Prenzlauer Berg — پرنتسلاور</option>
+          <option value="Friedrichshain">Friedrichshain — فریدریش‌هاین</option>
+          <option value="Kreuzberg">Kreuzberg — کروتسبرگ</option>
+          <option value="Neukölln">Neukölln — نوکولن</option>
+          <option value="Charlottenburg">Charlottenburg — شارلوتنبورگ</option>
+          <option value="Schöneberg">Schöneberg — شونبرگ</option>
+          <option value="Tempelhof">Tempelhof — تمپل‌هوف</option>
+          <option value="Spandau">Spandau — اشپاندائو</option>
+          <option value="Steglitz">Steglitz — اشتگلیتس</option>
+          <option value="Reinickendorf">Reinickendorf — راینیکندورف</option>
+          <option value="Lichtenberg">Lichtenberg — لیختنبرگ</option>
+          <option value="Marzahn">Marzahn — مارتسان</option>
+          <option value="Pankow">Pankow — پانکو</option>
+          <option value="Treptow">Treptow-Köpenick</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>نوع آگهی</label>
+        <select id="type">
+          <option value="wg">اتاق در آپارتمان مشترک (WG)</option>
+          <option value="wohnung">آپارتمان کامل (Wohnung)</option>
+          <option value="both">هر دو</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>حداکثر اجاره (€ در ماه)</label>
+        <input type="number" id="maxRent" placeholder="مثلاً ۸۰۰" min="100" max="5000" step="50">
+      </div>
+
+      <div class="field">
+        <label>حداقل اتاق</label>
+        <select id="rooms">
+          <option value="1">۱ اتاق</option>
+          <option value="2">۲ اتاق</option>
+          <option value="3">۳ اتاق</option>
+          <option value="4">۴ اتاق یا بیشتر</option>
+        </select>
+      </div>
+    </div>
+
+    <hr class="divider">
+    <div class="section-title">⚙️ شرایط خاص</div>
+    <div class="checkbox-group">
+      <label><input type="checkbox" id="wbs"> دارای WBS هستم</label>
+      <label><input type="checkbox" id="noSchufa"> بدون Schufa</label>
+      <label><input type="checkbox" id="furnished"> مبله (möbliert)</label>
+      <label><input type="checkbox" id="pets"> اجازه حیوان خانگی</label>
+      <label><input type="checkbox" id="shortterm"> کوتاه‌مدت (Zwischenmiete)</label>
+      <label><input type="checkbox" id="newBuilding"> ساختمان نو</label>
+    </div>
+
+    <hr class="divider">
+    <div class="section-title">🔍 جستجو در کدام سایت‌ها؟</div>
+    <div class="checkbox-group">
+      <label><input type="checkbox" id="p_wg" checked> WG-Gesucht</label>
+      <label><input type="checkbox" id="p_kl" checked> Kleinanzeigen</label>
+      <label><input type="checkbox" id="p_im" checked> ImmoScout24</label>
+      <label><input type="checkbox" id="p_iw" checked> Immowelt</label>
+      <label><input type="checkbox" id="p_zg" checked> Immonet</label>
+    </div>
+
+    <button class="search-btn" onclick="doSearch()">🔍 جستجو در همه سایت‌ها</button>
+
+    <div class="platforms-preview">
+      <span class="platform-badge">WG-Gesucht</span>
+      <span class="platform-badge">Kleinanzeigen</span>
+      <span class="platform-badge">ImmoScout24</span>
+      <span class="platform-badge">Immowelt</span>
+      <span class="platform-badge">Immonet</span>
+    </div>
+  </div>
+
+  <div class="results-info" id="resultsBox">
+    <h3>✅ لینک‌های جستجو آماده شدند — روی هر سایت کلیک کن</h3>
+    <div class="platform-links" id="platformLinks"></div>
+    <button class="open-all-btn" onclick="openAll()">🚀 باز کردن همه سایت‌ها به صورت همزمان</button>
+  </div>
+
+  <div class="tips">
+    <h3>💡 نکات مهم برای ایرانیان تازه‌وارد به برلین</h3>
+    <div class="tip-item"><div class="tip-dot"></div><div>اگر Schufa نداری، در پیام اول صادق باش و پیشنهاد ضمانت‌نامه بانکی یا پرداخت چند ماه پیش‌پرداخت بده</div></div>
+    <div class="tip-item"><div class="tip-dot"></div><div>WBS (Wohnberechtigungsschein) را از Bezirksamt منطقه‌ات بگیر — برای آپارتمان‌های ارزان‌تر ضروری است</div></div>
+    <div class="tip-item"><div class="tip-dot"></div><div>در WG-Gesucht پروفایل کامل با عکس بساز — شانست را بسیار بالا می‌برد</div></div>
+    <div class="tip-item"><div class="tip-dot"></div><div>Neukölln و Spandau معمولاً مقرون‌به‌صرفه‌ترین محله‌ها هستند</div></div>
+    <div class="tip-item"><div class="tip-dot"></div><div>آگهی‌های Kleinanzeigen اغلب از افراد خصوصی هستند — مذاکره روی قیمت ممکن است</div></div>
+  </div>
+
+</div>
+
+<footer>
+  برلین‌یاب — ساخته شده با ❤️ برای ایرانیان برلین
+</footer>
+
+<script>
+  let generatedLinks = [];
+
+  function doSearch() {
+    const bezirk = document.getElementById('bezirk').value;
+    const type = document.getElementById('type').value;
+    const maxRent = document.getElementById('maxRent').value;
+    const rooms = document.getElementById('rooms').value;
+    const wbs = document.getElementById('wbs').checked;
+    const noSchufa = document.getElementById('noSchufa').checked;
+    const furnished = document.getElementById('furnished').checked;
+    const pets = document.getElementById('pets').checked;
+    const shortterm = document.getElementById('shortterm').checked;
+
+    const p_wg = document.getElementById('p_wg').checked;
+    const p_kl = document.getElementById('p_kl').checked;
+    const p_im = document.getElementById('p_im').checked;
+    const p_iw = document.getElementById('p_iw').checked;
+    const p_zg = document.getElementById('p_zg').checked;
+
+    generatedLinks = [];
+
+    if (p_wg) {
+      let wgUrl = 'https://www.wg-gesucht.de/';
+      const wgType = type === 'wg' ? 'wg-zimmer' : type === 'wohnung' ? '1-zimmer-wohnungen' : 'wg-zimmer';
+      wgUrl += `${wgType}-in-Berlin.8.`;
+      wgUrl += type === 'wohnung' ? '1' : '0';
+      wgUrl += '.1.0.html?';
+      const wgParams = new URLSearchParams();
+      wgParams.set('city_id', '8');
+      if (maxRent) wgParams.set('rent_max', maxRent);
+      if (furnished) wgParams.set('furnished', '1');
+      if (pets) wgParams.set('pets', '1');
+      if (wbs) wgParams.set('wbs_required', '0');
+      wgUrl += wgParams.toString();
+      generatedLinks.push({ name: 'WG-Gesucht', desc: 'بهترین سایت برای WG و اتاق', icon: '🏠', cls: 'pl-wg', url: wgUrl });
+    }
+
+    if (p_kl) {
+      let klQuery = 'wohnung mieten Berlin';
+      if (bezirk) klQuery += ' ' + bezirk;
+      if (furnished) klQuery += ' möbliert';
+      if (shortterm) klQuery += ' Zwischenmiete';
+      const klUrl = `https://www.kleinanzeigen.de/s-wohnung-mieten/berlin/anzeige:angebote/preis::${maxRent || ''}/k0l3331r20?q=${encodeURIComponent(klQuery)}`;
+      generatedLinks.push({ name: 'Kleinanzeigen', desc: 'آگهی‌های خصوصی افراد', icon: '📋', cls: 'pl-kl', url: klUrl });
+    }
+
+    if (p_im) {
+      const imParams = new URLSearchParams();
+      imParams.set('geocodes', '1276001009');
+      imParams.set('numberofrooms.min', rooms);
+      if (maxRent) imParams.set('price.max', maxRent);
+      if (furnished) imParams.set('features', 'FURNISHED');
+      if (wbs) imParams.set('features', 'SOCIAL_APARTMENT');
+      const imUrl = `https://www.immoscout24.de/wohnung-mieten/berlin?${imParams.toString()}`;
+      generatedLinks.push({ name: 'ImmoScout24', desc: 'بزرگترین پورتال آلمان', icon: '🔵', cls: 'pl-im', url: imUrl });
+    }
+
+    if (p_iw) {
+      const iwParams = new URLSearchParams();
+      iwParams.set('locations', 'Berlin');
+      iwParams.set('price_to', maxRent || '');
+      iwParams.set('rooms_from', rooms);
+      if (furnished) iwParams.set('equipment[]', 'furnished');
+      const iwUrl = `https://www.immowelt.de/liste/berlin/wohnungen/mieten?${iwParams.toString()}`;
+      generatedLinks.push({ name: 'Immowelt', desc: 'گزینه‌های زیاد در برلین', icon: '🟠', cls: 'pl-iw', url: iwUrl });
+    }
+
+    if (p_zg) {
+      const zgUrl = `https://www.immonet.de/mieten/wohnungen-berlin.html?fromprice=0&toprice=${maxRent || ''}&fromrooms=${rooms}`;
+      generatedLinks.push({ name: 'Immonet', desc: 'سایت مکمل با آگهی‌های اضافه', icon: '🟣', cls: 'pl-zg', url: zgUrl });
+    }
+
+    const container = document.getElementById('platformLinks');
+    container.innerHTML = '';
+    generatedLinks.forEach(link => {
+      const a = document.createElement('a');
+      a.href = link.url;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.className = 'platform-link';
+      a.innerHTML = `
+        <div class="platform-icon ${link.cls}">${link.icon}</div>
+        <div class="platform-info">
+          <div class="platform-name">${link.name}</div>
+          <div class="platform-desc">${link.desc}</div>
+        </div>
+      `;
+      container.appendChild(a);
+    });
+
+    const box = document.getElementById('resultsBox');
+    box.classList.add('visible');
+    box.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function openAll() {
+    generatedLinks.forEach((link, i) => {
+      setTimeout(() => window.open(link.url, '_blank'), i * 300);
+    });
+  }
+</script>
+
+</body>
+</html>
